@@ -60,9 +60,15 @@ module Evercam
 
          output = nil
          if data.include?("shares")
-            output = data["shares"].first if !data["shares"].empty?
+            if !data["shares"].empty?
+               output = data["shares"].first
+               output["type"] = "share"
+            end
          elsif data.include?("share_requests")
-            output = data["share_requests"].first if !data["share_requests"].empty?
+            if !data["share_requests"].empty?
+               output = data["share_requests"].first
+               output["type"] = "share_request"
+            end
          end
 
          if output.nil?

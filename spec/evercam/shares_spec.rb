@@ -72,6 +72,8 @@ describe 'Evercam::API Logs Methods' do
          data = api.share_camera('test_camera', 'jbloggs@nowhere.com', "list,snapshot")
          expect(data).not_to be_nil
          expect(data.class).to eq(Hash)
+         expect(data.include?("type")).to eq(true)
+         expect(data["type"]).to eq("share")
       end
 
       it 'returns hash when the API call returns success and contains a share request' do
@@ -82,6 +84,8 @@ describe 'Evercam::API Logs Methods' do
          data = api.share_camera('test_camera', 'jbloggs@nowhere.com', "list,snapshot")
          expect(data).not_to be_nil
          expect(data.class).to eq(Hash)
+         expect(data.include?("type")).to eq(true)
+         expect(data["type"]).to eq("share_request")
       end
 
       it 'raises an exception when the API call returns an error' do
