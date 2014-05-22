@@ -8,7 +8,7 @@ module Evercam
       # camera_id::  The unique identifier of the camera that was shared.
       # user_id::    Either the user name or email address of the user that the
       #              camera was shared with.
-      def get_share(camera_id, user_id)
+      def get_camera_share(camera_id, user_id)
          data = handle_response(call("/shares", :get, camera_id: camera_id, user_id: user_id))
          if !data.include?("shares")
             message = "Invalid response received from server."
@@ -105,8 +105,14 @@ module Evercam
       # ==== Parameters
       # camera_id::  The unique identifier for the camera to fetch the list
       #              of pending share requests for.
-      def get_camera_share_requests(camera_id)
-         data = handle_response(call("/shares/requests/#{camera_id}"))
+      # status::     The status of the camera share requests to be retrieved.
+      #              This should be either 'PENDING', 'USED' or 'CANCELLED'.
+      #              Defaults to nil to indicate no particular status is
+      #              being requested.
+      def get_camera_share_requests(camera_id, status=nil)
+         parameters = {}
+         parameters[:status] = status if !status.nil?
+         data = handle_response(call("/shares/requests/#{camera_id}", :get, parameters))
          if !data.include?("share_requests")
             message = "Invalid response received from server."
             @logger.error message
