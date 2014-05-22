@@ -64,10 +64,20 @@ describe 'Evercam::API Logs Methods' do
    #----------------------------------------------------------------------------
 
    describe '#share_camera' do
-      it 'returns hash when the API call returns success' do
+      it 'returns hash when the API call returns success and contains a share' do
          stub_request(:post, "https://api.evercam.io/v1/shares/cameras/test_camera.json").
             with(:body => "api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e&email=jbloggs%40nowhere.com&rights=list%2Csnapshot").
             to_return(:status => 200, :body => '{"shares": [{}]}', :headers => {})
+
+         data = api.share_camera('test_camera', 'jbloggs@nowhere.com', "list,snapshot")
+         expect(data).not_to be_nil
+         expect(data.class).to eq(Hash)
+      end
+
+      it 'returns hash when the API call returns success and contains a share request' do
+         stub_request(:post, "https://api.evercam.io/v1/shares/cameras/test_camera.json").
+            with(:body => "api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e&email=jbloggs%40nowhere.com&rights=list%2Csnapshot").
+            to_return(:status => 200, :body => '{"share_requests": [{}]}', :headers => {})
 
          data = api.share_camera('test_camera', 'jbloggs@nowhere.com', "list,snapshot")
          expect(data).not_to be_nil

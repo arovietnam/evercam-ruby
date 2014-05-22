@@ -57,12 +57,20 @@ module Evercam
          parameters[:message] = options[:message] if options.include?(:message)
          parameters[:notify] = (options[:notify] == true) if options.include?(:notify)
          data = handle_response(call("/shares/cameras/#{camera_id}", :post, parameters))
-         if !data.include?("shares") || data["shares"].empty?
+
+         output = nil
+         if data.include?("shares")
+            output = data["shares"].first if !data["shares"].empty?
+         elsif data.include?("share_requests")
+            output = data["share_requests"].first if !data["share_requests"].empty?
+         end
+
+         if output.nil?
             message = "Invalid response received from server."
             @logger.error message
             raise EvercamError.new(message)
          end
-         data["shares"].first
+         output
       end
 
       # This method deletes an existing camera share.
