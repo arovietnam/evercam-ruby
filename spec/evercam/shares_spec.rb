@@ -5,12 +5,12 @@ describe 'Evercam::API Logs Methods' do
       Evercam::API.new(api_id: '123456', api_key: '1a2b3c4d5e6a7b8c9d0e')
    }
 
-   describe '#get_share' do
+   describe '#get_camera_share' do
       it 'returns a hash when the API call returns success' do
          stub_request(:get, "https://api.evercam.io/v1/shares.json?api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e&camera_id=test_camera&user_id=test_user").
             to_return(:status => 200, :body => '{"shares": [{}]}', :headers => {})
 
-         data = api.get_share('test_camera', 'test_user')
+         data = api.get_camera_share('test_camera', 'test_user')
          expect(data).not_to be_nil
          expect(data.class).to eq(Hash)
       end
@@ -19,7 +19,7 @@ describe 'Evercam::API Logs Methods' do
          stub_request(:get, "https://api.evercam.io/v1/shares.json?api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e&camera_id=test_camera&user_id=test_user").
             to_return(:status => 400, :body => '{"message": "Failed"}', :headers => {})
 
-         expect {api.get_share('test_camera', 'test_user')}.to raise_error(Evercam::EvercamError,
+         expect {api.get_camera_share('test_camera', 'test_user')}.to raise_error(Evercam::EvercamError,
                                                                            "Evercam API call returned an error. Message: Failed")
       end
 
@@ -27,7 +27,7 @@ describe 'Evercam::API Logs Methods' do
          stub_request(:get, "https://api.evercam.io/v1/shares.json?api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e&camera_id=test_camera&user_id=test_user").
             to_return(:status => 200, :body => '{}', :headers => {})
 
-         expect {api.get_share('test_camera', 'test_user')}.to raise_error(Evercam::EvercamError,
+         expect {api.get_camera_share('test_camera', 'test_user')}.to raise_error(Evercam::EvercamError,
                                                                            "Invalid response received from server.")
       end
    end
@@ -64,14 +64,14 @@ describe 'Evercam::API Logs Methods' do
    #----------------------------------------------------------------------------
 
    describe '#share_camera' do
-      it 'returns a reference to the API object when the API call returns success' do
+      it 'returns hash when the API call returns success' do
          stub_request(:post, "https://api.evercam.io/v1/shares/cameras/test_camera.json").
             with(:body => "api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e&email=jbloggs%40nowhere.com&rights=list%2Csnapshot").
-            to_return(:status => 200, :body => "", :headers => {})
+            to_return(:status => 200, :body => '{"shares": [{}]}', :headers => {})
 
          data = api.share_camera('test_camera', 'jbloggs@nowhere.com', "list,snapshot")
          expect(data).not_to be_nil
-         expect(data).to eq(api)
+         expect(data.class).to eq(Hash)
       end
 
       it 'raises an exception when the API call returns an error' do
@@ -81,6 +81,15 @@ describe 'Evercam::API Logs Methods' do
 
          expect {api.share_camera('test_camera', 'jbloggs@nowhere.com', "list,snapshot")}.to raise_error(Evercam::EvercamError,
                                                                                                          "Evercam API call returned an error. Message: Failed")
+      end
+
+      it 'raises an exception when the API call response contains no data' do
+         stub_request(:post, "https://api.evercam.io/v1/shares/cameras/test_camera.json").
+            with(:body => "api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e&email=jbloggs%40nowhere.com&rights=list%2Csnapshot").
+            to_return(:status => 200, :body => '{}', :headers => {})
+
+         expect {api.share_camera('test_camera', 'jbloggs@nowhere.com', "list,snapshot")}.to raise_error(Evercam::EvercamError,
+                                                                                                         "Invalid response received from server.")
       end
    end
 
