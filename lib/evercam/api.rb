@@ -6,6 +6,7 @@ module Evercam
       include Cameras
       include Logs
       include Models
+      include Public
       include Shares
       include Snapshots
       include Users
