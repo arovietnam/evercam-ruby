@@ -111,7 +111,7 @@ describe 'Evercam::API Logs Methods' do
 
    describe '#delete_camera_share' do
       it 'returns a reference to the API object when the API call returns success' do
-         stub_request(:delete, "https://api.evercam.io/v1/shares/camera/test_camera.json?api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e&share_id=200").
+         stub_request(:delete, "https://api.evercam.io/v1/shares/cameras/test_camera.json?api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e&share_id=200").
             to_return(:status => 200, :body => "", :headers => {})
 
          data = api.delete_camera_share('test_camera', 200)
@@ -120,7 +120,7 @@ describe 'Evercam::API Logs Methods' do
       end
 
       it 'raises an exception when the API call returns an error' do
-         stub_request(:delete, "https://api.evercam.io/v1/shares/camera/test_camera.json?api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e&share_id=200").
+         stub_request(:delete, "https://api.evercam.io/v1/shares/cameras/test_camera.json?api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e&share_id=200").
             to_return(:status => 400, :body => '{"message": "Failed"}', :headers => {})
 
          expect {api.delete_camera_share('test_camera', 200)}.to raise_error(Evercam::EvercamError,

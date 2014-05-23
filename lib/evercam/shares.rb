@@ -85,7 +85,7 @@ module Evercam
       # camera_id::  The unique identifier for the camera that was shared.
       # share_id::   The unique identifier of the share that is being deleted.
       def delete_camera_share(camera_id, share_id)
-         handle_response(call("/shares/camera/#{camera_id}", :delete, share_id: share_id))
+         handle_response(call("/shares/cameras/#{camera_id}", :delete, share_id: share_id))
          self
       end
 
