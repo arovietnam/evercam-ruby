@@ -4,6 +4,7 @@ $: << "#{Dir.getwd}/spec"
 ENV['EVERCAM_ENV'] ||= 'test'
 
 require 'bundler'
+require 'cgi'
 require 'minitest/autorun'
 require 'simplecov'
 

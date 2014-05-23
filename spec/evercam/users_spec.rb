@@ -100,4 +100,46 @@ describe 'Evercam::API User Methods' do
                                                               "Evercam API call returned an error. Message: Unauthorized")
       end
    end
+
+   #----------------------------------------------------------------------------
+
+   describe '#create_user' do
+      it 'returns a Hash when the API call returns success' do
+         stub_request(:post, "https://api.evercam.io/v1/users.json").
+            with(:body => "api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e&country=Ireland&email=test_user%40test.com&forename=Test&lastname=User&password=password&username=test_user").
+            to_return(:status => 200, :body => '{"users": [{}]}', :headers => {})
+
+         data = api.create_user('Test', 'User', 'test_user', 'test_user@test.com', 'password', 'Ireland')
+         expect(data).not_to be_nil
+         expect(data.class).to eq(Hash)
+      end
+
+      it 'raises an exception when the API call returns an error' do
+         stub_request(:post, "https://api.evercam.io/v1/users.json").
+            with(:body => "api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e&country=Ireland&email=test_user%40test.com&forename=Test&lastname=User&password=password&username=test_user").
+            to_return(:status => 403, :body => '{"message": "Unauthorized"}', :headers => {})
+
+         expect {api.create_user('Test',
+                                 'User',
+                                 'test_user',
+                                 'test_user@test.com',
+                                 'password',
+                                 'Ireland')}.to raise_error(Evercam::EvercamError,
+                                                            "Evercam API call returned an error. Message: Unauthorized")
+      end
+
+      it 'raises an exception when the API call response contains no data' do
+         stub_request(:post, "https://api.evercam.io/v1/users.json").
+            with(:body => "api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e&country=Ireland&email=test_user%40test.com&forename=Test&lastname=User&password=password&username=test_user").
+            to_return(:status => 200, :body => '{"users": []}', :headers => {})
+
+         expect {api.create_user('Test',
+                                 'User',
+                                 'test_user',
+                                 'test_user@test.com',
+                                 'password',
+                                 'Ireland')}.to raise_error(Evercam::EvercamError,
+                                                            "Invalid response received from server.")
+      end
+   end
 end
