@@ -18,8 +18,6 @@ module Evercam
       # options::  A Hash of additional options to be used by the instance. At
       #            a minimum this must include keys for :api_id and :api_key.
       def initialize(options={})
-         raise EvercamError.new("No API id specified.") if !options.include?(:api_id)
-         raise EvercamError.new("No API key specified.") if !options.include?(:api_key)
          @api_id  = options[:api_id]
          @api_key = options[:api_key]
          @logger  = NullLogger.new(STDOUT)
@@ -67,7 +65,10 @@ module Evercam
             faraday.adapter :typhoeus
          end
 
-         values = {}.merge(parameters).merge(api_id: @api_id, api_key: @api_key)
+         values = {}.merge(parameters)
+         if @api_id && @api_key
+            values = values.merge(api_id: @api_id, api_key: @api_key)
+         end
          case verb
             when :get
                @logger.info "GET #{endpoint_url(path)}"
