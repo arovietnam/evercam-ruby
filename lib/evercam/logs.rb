@@ -16,7 +16,6 @@ module Evercam
          parameters[:to] = options[:to].to_i if options.include?(:to)
          parameters[:limit] = options[:limit] if options.include?(:limit)
          parameters[:page] = options[:page] if options.include?(:page)
-         parameters[:objects] = options[:objects] if options.include?(:objects)
          if options.include?(:types)
             values = options[:types]
             if values.kind_of?(Array)
