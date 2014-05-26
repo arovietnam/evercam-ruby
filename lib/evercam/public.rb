@@ -17,7 +17,7 @@ module Evercam
             @logger.error message
             raise EvercamError.new(message)
          end
-         data["cameras"]
+         return data["cameras"], data["pages"]
       end
    end
 end
