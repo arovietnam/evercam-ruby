@@ -68,13 +68,17 @@ module Evercam
          parameters = {}
          parameters[:with_data] = true if complete == true
          data = handle_response(call("/cameras/#{camera_id}/snapshots/latest", :get, parameters))
-         if !data.include?("snapshots") || data["snapshots"].size == 0
+         if !data.include?("snapshots")
             message = "Invalid response received from server."
             @logger.error message
             raise EvercamError.new(message)
          end
-         data["snapshots"].first["created_at"] = Time.at(data["snapshots"].first["created_at"])
-         data["snapshots"].first
+         snapshot = nil
+         if !data["snapshots"].empty?
+            snapshot               = data["snapshots"].first
+            snapshot["created_at"] = Time.at(snapshot["created_at"])
+         end
+         snapshot
       end
 
       # This method fetches a list of snapshot stored in the system for a

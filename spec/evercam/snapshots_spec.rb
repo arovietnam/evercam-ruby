@@ -116,10 +116,17 @@ describe 'Evercam::API Snapshots Methods' do
 
       it 'it raises an exception when the API call response does not include snapshot details' do
          stub_request(:get, "https://api.evercam.io/v1/cameras/test_camera/snapshots/latest.json?api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e").
-            to_return(:status => 200, :body => '{"snapshots": []}', :headers => {})
+            to_return(:status => 200, :body => '{}', :headers => {})
 
          expect {api.get_latest_snapshot('test_camera')}.to raise_error(Evercam::EvercamError,
                                                                         "Invalid response received from server.")
+      end
+
+      it 'returns nil when the API call response indicates that there is no snapshot available' do
+         stub_request(:get, "https://api.evercam.io/v1/cameras/test_camera/snapshots/latest.json?api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e").
+            to_return(:status => 200, :body => '{"snapshots": []}', :headers => {})
+
+         expect(api.get_latest_snapshot('test_camera')).to be_nil
       end
    end
 
