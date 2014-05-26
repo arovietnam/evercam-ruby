@@ -69,27 +69,33 @@ module Evercam
          if @api_id && @api_key
             values = values.merge(api_id: @api_id, api_key: @api_key)
          end
+
+         started  = Time.now
+         response = nil
          case verb
             when :get
                @logger.info "GET #{endpoint_url(path)}"
-               connection.get(api_path(path), values)
+               response = connection.get(api_path(path), values)
             when :delete
                @logger.info "DELETE #{endpoint_url(path)}"
-               connection.delete(api_path(path), values)
+               response = connection.delete(api_path(path), values)
             when :patch
                @logger.info "PATCH #{endpoint_url(path)}"
-               connection.patch(api_path(path), values)
+               response = connection.patch(api_path(path), values)
             when :post
                @logger.info "POST #{endpoint_url(path)}"
-               connection.post(api_path(path), values)
+               response = connection.post(api_path(path), values)
             when :put
                @logger.info "PUT #{endpoint_url(path)}"
-               connection.put(api_path(path), values)
+               response = connection.put(api_path(path), values)
             else
                message = "Unrecognised HTTP method '#{verb}' specified for request."
                @logger.error message
                raise EvercamError.new(message)
          end
+         finished = Time.now
+         @logger.info "API Call Took: #{started - finished}"
+         response
       end
 
       # This method provides generic processing of responses from a call to the
