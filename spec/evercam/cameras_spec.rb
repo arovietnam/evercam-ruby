@@ -178,4 +178,36 @@ describe 'Evercam::API Cameras Methods' do
                                                                                             "Invalid response received from server.")
       end
    end
+
+   #----------------------------------------------------------------------------
+
+   describe '#change_camera_owner' do
+      it 'returns a hash if the API call returns success' do
+         stub_request(:put, "https://api.evercam.io/v1/cameras/test_camera.json").
+            with(:body => "api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e&user_id=test_user").
+            to_return(:status => 200, :body => '{"cameras": [{}]}', :headers => {})
+
+         data = api.change_camera_owner('test_camera', 'test_user')
+         expect(data).not_to be_nil
+         expect(data.class).to eq(Hash)
+      end
+
+      it 'raises an exception if the API call returns an error' do
+         stub_request(:put, "https://api.evercam.io/v1/cameras/test_camera.json").
+            with(:body => "api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e&user_id=test_user").
+            to_return(:status => 400, :body => '{"message": "Failed"}', :headers => {})
+
+         expect {api.change_camera_owner('test_camera', 'test_user')}.to raise_error(Evercam::EvercamError,
+                                                                                     "Evercam API call returned an error. Message: Failed")
+      end
+
+      it 'raises an exception of the API call response contains no data' do
+         stub_request(:put, "https://api.evercam.io/v1/cameras/test_camera.json").
+            with(:body => "api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e&user_id=test_user").
+            to_return(:status => 200, :body => '{"cameras": []}', :headers => {})
+
+         expect {api.change_camera_owner('test_camera', 'test_user')}.to raise_error(Evercam::EvercamError,
+                                                                                     "Invalid response received from server.")
+      end
+   end
 end
