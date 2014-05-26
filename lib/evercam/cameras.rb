@@ -94,5 +94,23 @@ module Evercam
          end
          data["cameras"][0]
       end
+
+      # This method changes the owner of a camera. You must be the owner of the
+      # camera to call this method and all artifacts relating to the camera
+      # transfer ownership when the camera does.
+      #
+      # ==== Parameters
+      # camera_id::  The unique identifier of the camera to be transferred.
+      # user_id:     The Evercam user name or email address of the new owner for
+      #              the camera.
+      def change_camera_owner(camera_id, user_id)
+         data = handle_response(call("/cameras/#{camera_id}", :put, user_id: user_id))
+         if !data.include?("cameras") || data["cameras"].empty?
+            message = "Invalid response received from server."
+            @logger.error message
+            raise EvercamError.new(message)
+         end
+         data["cameras"].first
+      end
    end
 end
