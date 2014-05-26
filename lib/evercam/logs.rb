@@ -26,12 +26,12 @@ module Evercam
          end
          parameters[:objects] = (options[:objects] == true) if options.include?(:objects)
          data = handle_response(call("/cameras/#{camera_id}/logs", :get, parameters))
-         if !data.include?("logs")
+         if !data.include?("logs") || !data.include?("pages")
             message = "Invalid response received from server."
             @logger.error message
             raise EvercamError.new(message)
          end
-         data["logs"]
+         {logs: data["logs"], pages: data["pages"]}
       end
    end
 end
