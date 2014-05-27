@@ -125,7 +125,7 @@ module Evercam
                end
             end
          else
-            @logger.error.message "API call returned with a status of #{response.status}."
+            @logger.error "API call returned with a status of #{response.status}."
             data    = parse_response_body(response)
             message = nil
             if !data.nil? && data.include?("message")
