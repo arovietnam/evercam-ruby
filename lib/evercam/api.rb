@@ -94,7 +94,7 @@ module Evercam
                raise EvercamError.new(message)
          end
          finished = Time.now
-         @logger.info "API Call Took: #{started - finished}"
+         @logger.info "API Call Took: #{finished - started}"
          response
       end
 
@@ -125,6 +125,7 @@ module Evercam
                end
             end
          else
+            @logger.error.message "API call returned with a status of #{response.status}."
             data    = parse_response_body(response)
             message = nil
             if !data.nil? && data.include?("message")
