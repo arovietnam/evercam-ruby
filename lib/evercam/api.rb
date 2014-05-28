@@ -61,6 +61,7 @@ module Evercam
       #               request automatically.
       def call(path, verb=:get, parameters={})
          connection = Faraday.new(url: base_url) do |faraday|
+            faraday.request :url_encoded
             faraday.use FaradayMiddleware::FollowRedirects
             faraday.adapter :typhoeus
          end
@@ -75,18 +76,23 @@ module Evercam
          case verb
             when :get
                @logger.info "GET #{endpoint_url(path)}"
+               @logger.info "Parameters: #{values}"
                response = connection.get(api_path(path), values)
             when :delete
                @logger.info "DELETE #{endpoint_url(path)}"
+               @logger.info "Parameters: #{values}"
                response = connection.delete(api_path(path), values)
             when :patch
                @logger.info "PATCH #{endpoint_url(path)}"
+               @logger.info "Parameters: #{values}"
                response = connection.patch(api_path(path), values)
             when :post
                @logger.info "POST #{endpoint_url(path)}"
+               @logger.info "Parameters: #{values}"
                response = connection.post(api_path(path), values)
             when :put
                @logger.info "PUT #{endpoint_url(path)}"
+               @logger.info "Parameters: #{values}"
                response = connection.put(api_path(path), values)
             else
                message = "Unrecognised HTTP method '#{verb}' specified for request."
@@ -121,16 +127,19 @@ module Evercam
                   message = "Evercam API call returned an error. "\
                             "Message: #{data['message']}"
                   @logger.error message
+                  @logger.error "Stack Trace:\n#{data['trace']}" if data.include?("trace")
                   raise EvercamError.new(message)
                end
             end
          else
             @logger.error "API call returned with a status of #{response.status}."
             data    = parse_response_body(response)
+            @logger.info "Response Contents:\n#{data}"
             message = nil
             if !data.nil? && data.include?("message")
                message = "Evercam API call returned an error. "\
                          "Message: #{data['message']}"
+               message += "Stack Trace:\n#{data['trace']}" if data.include?('trace')
             else
                message = "Evercam API call returned a #{response.status} code. "\
                          "Response body was '#{response.body}'."

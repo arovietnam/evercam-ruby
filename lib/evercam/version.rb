@@ -1,5 +1,5 @@
 # Copyright © 2014, Evercam.
 
 module Evercam
-   VERSION = "0.0.8"
+   VERSION = "0.0.9"
 end

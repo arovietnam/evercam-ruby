@@ -104,7 +104,7 @@ module Evercam
       # user_id:     The Evercam user name or email address of the new owner for
       #              the camera.
       def change_camera_owner(camera_id, user_id)
-         data = handle_response(call("/cameras/#{camera_id}", :put, user_id: user_id))
+         data = handle_response(call("/cameras/#{camera_id}", :put, {user_id: user_id}))
          if !data.include?("cameras") || data["cameras"].empty?
             message = "Invalid response received from server."
             @logger.error message
