@@ -66,7 +66,8 @@ describe 'Evercam::API Snapshots Methods' do
    describe '#store_snapshot' do
       it 'it returns a hash when the API call returns success' do
          stub_request(:post, "https://api.evercam.io/v1/cameras/test_camera/snapshots.json").
-            with(:body => "api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e&notes=This%20is%20a%20comment.").
+            with(:body => {"api_id"=>"123456", "api_key"=>"1a2b3c4d5e6a7b8c9d0e", "notes"=>"This is a comment."},
+                 :headers => {'Content-Type'=>'application/x-www-form-urlencoded', 'User-Agent'=>'Faraday v0.9.0'}).
             to_return(:status => 200, :body => '{"snapshots": [{"created_at": 1400671445}]}', :headers => {})
 
          data = api.store_snapshot('test_camera', 'This is a comment.')
