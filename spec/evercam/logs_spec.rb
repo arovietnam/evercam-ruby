@@ -22,7 +22,7 @@ describe 'Evercam::API Logs Methods' do
             to_return(:status => 400, :body => '{"message": "Its Broken"}', :headers => {})
 
          expect {api.get_logs('test_camera')}.to raise_error(Evercam::EvercamError,
-                                                             "Evercam API call returned an error. Message: Its Broken")
+                                                             "Its Broken")
       end
 
       it 'raises an exception when the API call does not contain data' do

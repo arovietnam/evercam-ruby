@@ -20,7 +20,7 @@ describe 'Evercam::API Models Methods' do
             to_return(:status => 400, :body => '{"message": "Crash bang wallop!"}', :headers => {})
 
          expect {api.get_all_models}.to raise_error(Evercam::EvercamError,
-                                                    "Evercam API call returned an error. Message: Crash bang wallop!")
+                                                    "Crash bang wallop!")
       end
 
       it 'raises an exception when the API call response contains no data' do
@@ -49,7 +49,7 @@ describe 'Evercam::API Models Methods' do
             to_return(:status => 200, :body => '{"message": "Crash bang wallop!"}', :headers => {})
 
          expect {api.get_vendor_models('test_vendor')}.to raise_error(Evercam::EvercamError,
-                                                                      "Evercam API call returned an error. Message: Crash bang wallop!")
+                                                                      "Crash bang wallop!")
       end
 
       it 'raises an exception when the API call response contains no data' do
@@ -78,7 +78,7 @@ describe 'Evercam::API Models Methods' do
             to_return(:status => 200, :body => '{"message": "Crash bang wallop!"}', :headers => {})
 
          expect {api.get_vendor_model('test_vendor', 'test_model')}.to raise_error(Evercam::EvercamError,
-                                                                                   "Evercam API call returned an error. Message: Crash bang wallop!")
+                                                                                   "Crash bang wallop!")
       end
 
       it 'raises an exception when the API call response contains no data' do

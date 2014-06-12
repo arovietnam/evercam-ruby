@@ -20,7 +20,7 @@ describe 'Evercam::API Logs Methods' do
             to_return(:status => 400, :body => '{"message": "Failed"}', :headers => {})
 
          expect {api.get_camera_share('test_camera', 'test_user')}.to raise_error(Evercam::EvercamError,
-                                                                           "Evercam API call returned an error. Message: Failed")
+                                                                           "Failed")
       end
 
       it 'it raises an exception when the API call response contains no data' do
@@ -49,7 +49,7 @@ describe 'Evercam::API Logs Methods' do
             to_return(:status => 400, :body => '{"message": "Failed"}', :headers => {})
 
          expect {api.get_camera_shares('test_camera')}.to raise_error(Evercam::EvercamError,
-                                                                      "Evercam API call returned an error. Message: Failed")
+                                                                      "Failed")
       end
 
       it 'raises an exception when the API call response contains no data' do
@@ -94,7 +94,7 @@ describe 'Evercam::API Logs Methods' do
             to_return(:status => 400, :body => '{"message": "Failed"}', :headers => {})
 
          expect {api.share_camera('test_camera', 'jbloggs@nowhere.com', "list,snapshot")}.to raise_error(Evercam::EvercamError,
-                                                                                                         "Evercam API call returned an error. Message: Failed")
+                                                                                                         "Failed")
       end
 
       it 'raises an exception when the API call response contains no data' do
@@ -124,7 +124,7 @@ describe 'Evercam::API Logs Methods' do
             to_return(:status => 400, :body => '{"message": "Failed"}', :headers => {})
 
          expect {api.delete_camera_share('test_camera', 200)}.to raise_error(Evercam::EvercamError,
-                                                                             "Evercam API call returned an error. Message: Failed")
+                                                                             "Failed")
       end
    end
 
@@ -147,7 +147,7 @@ describe 'Evercam::API Logs Methods' do
             to_return(:status => 400, :body => '{"message": "Failed"}', :headers => {})
 
          expect {api.update_camera_share(200, "list,view,edit")}.to raise_error(Evercam::EvercamError,
-                                                                                "Evercam API call returned an error. Message: Failed")
+                                                                                "Failed")
       end
    end
 
@@ -168,7 +168,7 @@ describe 'Evercam::API Logs Methods' do
             to_return(:status => 400, :body => '{"message": "Failed"}', :headers => {})
 
          expect {api.get_user_camera_shares('test_user')}.to raise_error(Evercam::EvercamError,
-                                                                         "Evercam API call returned an error. Message: Failed")
+                                                                         "Failed")
       end
 
       it 'raises an exception when the API call response contains no data' do
@@ -197,7 +197,7 @@ describe 'Evercam::API Logs Methods' do
             to_return(:status => 400, :body => '{"message": "Failed"}', :headers => {})
 
          expect {api.get_camera_share_requests('test_camera')}.to raise_error(Evercam::EvercamError,
-                                                                              "Evercam API call returned an error. Message: Failed")
+                                                                              "Failed")
       end
 
       it 'raises an exception when the API call response contains no data' do
@@ -226,7 +226,7 @@ describe 'Evercam::API Logs Methods' do
             to_return(:status => 200, :body => '{"message": "Failed"}', :headers => {})
 
          expect {api.cancel_camera_share_request('test_request_id', 'blah@blah.de.blah')}.to raise_error(Evercam::EvercamError,
-                                                                                                         "Evercam API call returned an error. Message: Failed")
+                                                                                                         "Failed")
       end
    end
 
@@ -249,7 +249,7 @@ describe 'Evercam::API Logs Methods' do
             to_return(:status => 400, :body => '{"message": "Failed"}', :headers => {})
 
          expect {api.update_camera_share_request('test_request_id', "list,view,edit")}.to raise_error(Evercam::EvercamError,
-                                                                                                      "Evercam API call returned an error. Message: Failed")
+                                                                                                      "Failed")
       end
    end
 end

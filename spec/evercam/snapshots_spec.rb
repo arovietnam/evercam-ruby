@@ -20,7 +20,7 @@ describe 'Evercam::API Snapshots Methods' do
             to_return(:status => 404, :body => '{"message": "Not Found"}', :headers => {})
 
          expect {api.get_live_image('test_camera')}.to raise_error(Evercam::EvercamError,
-                                                                 "Evercam API call returned an error. Message: Not Found")
+                                                                 "Not Found")
       end
 
       it 'raises an exception if the API call result does not include expected data' do
@@ -49,7 +49,7 @@ describe 'Evercam::API Snapshots Methods' do
             to_return(:status => 404, :body => '{"message": "Not Found"}', :headers => {})
 
          expect {api.get_snapshots('test_camera')}.to raise_error(Evercam::EvercamError,
-                                                                  "Evercam API call returned an error. Message: Not Found")
+                                                                  "Not Found")
       end
 
       it 'raises an exception if the API response does not include snapshot data' do
@@ -81,7 +81,7 @@ describe 'Evercam::API Snapshots Methods' do
             to_return(:status => 404, :body => '{"message": "Not Found"}', :headers => {})
 
          expect {api.store_snapshot('test_camera')}.to raise_error(Evercam::EvercamError,
-                                                                   "Evercam API call returned an error. Message: Not Found")
+                                                                   "Not Found")
       end
 
       it 'it raises an exception when the API call response does not include snapshot details' do
@@ -112,7 +112,7 @@ describe 'Evercam::API Snapshots Methods' do
             to_return(:status => 404, :body => '{"message": "Not Found"}', :headers => {})
 
          expect {api.get_latest_snapshot('test_camera')}.to raise_error(Evercam::EvercamError,
-                                                                        "Evercam API call returned an error. Message: Not Found")
+                                                                        "Not Found")
       end
 
       it 'it raises an exception when the API call response does not include snapshot details' do
@@ -155,7 +155,7 @@ describe 'Evercam::API Snapshots Methods' do
             to_return(:status => 404, :body => '{"message": "Not Found"}', :headers => {})
 
          expect {api.get_snapshots_in_date_range('test_camera', from, to)}.to raise_error(Evercam::EvercamError,
-                                                                                          "Evercam API call returned an error. Message: Not Found")
+                                                                                          "Not Found")
       end
 
       it 'raises an exception when the API response does not include snapshot details' do
@@ -186,7 +186,7 @@ describe 'Evercam::API Snapshots Methods' do
             to_return(:status => 404, :body => '{"message": "Not Found"}', :headers => {})
 
          expect {api.get_snapshot_dates('test_camera', 4, 2012)}.to raise_error(Evercam::EvercamError,
-                                                                                "Evercam API call returned an error. Message: Not Found")
+                                                                                "Not Found")
       end
 
       it 'raises an exception when the API call response does not include date data' do
@@ -221,7 +221,7 @@ describe 'Evercam::API Snapshots Methods' do
             to_return(:status => 404, :body => '{"message": "Not Found"}', :headers => {})
 
          expect {api.get_snapshots_by_hour('test_camera', date)}.to raise_error(Evercam::EvercamError,
-                                                                                "Evercam API call returned an error. Message: Not Found")
+                                                                                "Not Found")
       end
 
       it 'raises an exception when the API call response does not include data' do
@@ -254,7 +254,7 @@ describe 'Evercam::API Snapshots Methods' do
             to_return(:status => 404, :body => '{"message": "Not Found"}', :headers => {})
 
          expect {api.get_snapshot_at('test_camera', timestamp)}.to raise_error(Evercam::EvercamError,
-                                                                               "Evercam API call returned an error. Message: Not Found")
+                                                                               "Not Found")
       end
 
       it 'raises an exception when the API call returns no data' do
@@ -287,7 +287,7 @@ describe 'Evercam::API Snapshots Methods' do
             to_return(:status => 404, :body => '{"message": "Not Found"}', :headers => {})
 
          expect {api.delete_snapshot('test_camera', timestamp)}.to raise_error(Evercam::EvercamError,
-                                                                               "Evercam API call returned an error. Message: Not Found")
+                                                                               "Not Found")
       end
    end
 
@@ -308,7 +308,7 @@ describe 'Evercam::API Snapshots Methods' do
             to_return(:status => 404, :body => '{"message": "Not Found"}', :headers => {})
 
          expect {api.get_snapshot('test_camera')}.to raise_error(Evercam::EvercamError,
-                                                                 "Evercam API call returned an error. Message: Not Found")
+                                                                 "Not Found")
       end
    end
 end

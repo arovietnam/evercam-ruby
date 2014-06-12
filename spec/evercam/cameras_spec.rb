@@ -23,7 +23,7 @@ describe 'Evercam::API Cameras Methods' do
                                  '/onvif/snapshot',
                                  'admin',
                                  'password')}.to raise_error(Evercam::EvercamError,
-                                                             "Evercam API call returned an error. Message: Unauthorized")
+                                                             "Unauthorized")
       end
    end
 
@@ -44,7 +44,7 @@ describe 'Evercam::API Cameras Methods' do
             to_return(:status => 403, :body => '{"message": "Unauthorized"}', :headers => {})
 
          expect {api.get_camera('test_camera')}.to raise_error(Evercam::EvercamError,
-                                                               "Evercam API call returned an error. Message: Unauthorized")
+                                                               "Unauthorized")
       end
 
       it 'raises an exception if the API call does not return any cameras' do
@@ -83,7 +83,7 @@ describe 'Evercam::API Cameras Methods' do
          expect {api.update_camera('test_camera',
                                    name: 'blah_camera',
                                    cam_password: 'different')}.to raise_error(Evercam::EvercamError,
-                                                                              "Evercam API call returned an error. Message: Unauthorized")
+                                                                              "Unauthorized")
       end
    end
 
@@ -104,7 +104,7 @@ describe 'Evercam::API Cameras Methods' do
             to_return(:status => 403, :body => '{"message": "Unauthorized"}', :headers => {})
 
          expect {api.delete_camera('test_camera')}.to raise_error(Evercam::EvercamError,
-                                                                  "Evercam API call returned an error. Message: Unauthorized")
+                                                                  "Unauthorized")
       end
    end
 
@@ -126,7 +126,7 @@ describe 'Evercam::API Cameras Methods' do
             to_return(:status => 403, :body => '{"message": "Unauthorized"}', :headers => {})
 
          expect {api.get_cameras('test_camera1', 'test_camera2')}.to raise_error(Evercam::EvercamError,
-                                                                                 "Evercam API call returned an error. Message: Unauthorized")
+                                                                                 "Unauthorized")
       end
 
       it 'raises an exception if the API call does not return any cameras' do
@@ -159,7 +159,7 @@ describe 'Evercam::API Cameras Methods' do
             to_return(:status => 200, :body => '{"message": "Unauthorized"}', :headers => {})
 
          expect {api.create_camera("test_camera_1", "Test Camera 1", false)}.to raise_error(Evercam::EvercamError,
-                                                                                            "Evercam API call returned an error. Message: Unauthorized")
+                                                                                            "Unauthorized")
       end
 
       it 'raises an exception if the API call does not include any camera data' do
@@ -202,7 +202,7 @@ describe 'Evercam::API Cameras Methods' do
             to_return(:status => 400, :body => '{"message": "Failed"}', :headers => {})
 
          expect {api.change_camera_owner('test_camera', 'test_user')}.to raise_error(Evercam::EvercamError,
-                                                                                     "Evercam API call returned an error. Message: Failed")
+                                                                                     "Failed")
       end
 
       it 'raises an exception of the API call response contains no data' do
