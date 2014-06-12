@@ -120,32 +120,13 @@ module Evercam
                   message = "API call failed to return any data or "\
                             "contained data that could not be parsed."
                   @logger.error message
-                  raise EvercamError.new(message)
+                  raise EvercamError.new(message, "invalid_response", response.status)
                end
-
-               if data.include?("message")
-                  message = "Evercam API call returned an error. "\
-                            "Message: #{data['message']}"
-                  @logger.error message
-                  @logger.error "Stack Trace:\n#{data['trace']}" if data.include?("trace")
-                  raise EvercamError.new(message)
-               end
+               handle_error_response(data, response.status) if data.include?("message")
             end
          else
             @logger.error "API call returned with a status of #{response.status}."
-            data    = parse_response_body(response)
-            @logger.info "Response Contents:\n#{data}"
-            message = nil
-            if !data.nil? && data.include?("message")
-               message = "Evercam API call returned an error. "\
-                         "Message: #{data['message']}"
-               message += "Stack Trace:\n#{data['trace']}" if data.include?('trace')
-            else
-               message = "Evercam API call returned a #{response.status} code. "\
-                         "Response body was '#{response.body}'."
-            end
-            @logger.error message
-            raise EvercamError.new(message)            
+            handle_error_response(parse_response_body(response), response.status)
          end
          data
       end
@@ -162,14 +143,13 @@ module Evercam
             data    = parse_response_body(response)
             message = nil
             if !data.nil? && data.include?("message")
-               message = "Evercam API call returned an error. "\
-                         "Message: #{data['message']}"
+               handle_error_response(data, response.status)
             else
                message = "Evercam API call returned a #{response.status} code. "\
                          "Response body was '#{response.body}'."
+               @logger.error message
+               raise EvercamError.new(message, "invalid_response", response.status)
             end
-            @logger.error message
-            raise EvercamError.new(message)            
          else
             data = response.body
          end
@@ -217,6 +197,19 @@ module Evercam
       # suffix::  The API call dependent part of the path.
       def endpoint_url(suffix)
          "#{base_url}#{api_path(suffix)}"
+      end
+
+      # This method processes a standard Evercam API error response to raise
+      # an exception from it.
+      #
+      # ==== Parameters
+      # data::    The parsed response data.
+      # status::  The HTTP status code associated with the response.
+      def handle_error_response(data, status)
+         message = (data["message"] || "Evercam API call returned an error.")
+         @logger.error "API response contains error details.\nMessage: #{message}\n"\
+                       "Code: #{data["code"]}\nStatus: #{status}"
+         raise EvercamError.new(message, data["code"], status, data["context"])
       end
    end
 end

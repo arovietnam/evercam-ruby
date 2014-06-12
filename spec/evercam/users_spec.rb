@@ -20,7 +20,7 @@ describe 'Evercam::API User Methods' do
             to_return(:status => 403, :body => '{"message": "Unauthorized"}', :headers => {})
 
          expect {api.get_user('test_user')}.to raise_error(Evercam::EvercamError,
-                                                           "Evercam API call returned an error. Message: Unauthorized")
+                                                           "Unauthorized")
       end
 
       it 'raises an exception when the API call does not return any users' do
@@ -50,7 +50,7 @@ describe 'Evercam::API User Methods' do
             to_return(:status => 403, :body => '{"message": "Unauthorized"}', :headers => {})
 
          expect {api.get_user_cameras('test_user')}.to raise_error(Evercam::EvercamError,
-                                                                   "Evercam API call returned an error. Message: Unauthorized")
+                                                                   "Unauthorized")
       end
    end
 
@@ -77,7 +77,7 @@ describe 'Evercam::API User Methods' do
             to_return(:status => 200, :body => '{"message": "Unauthorized"}', :headers => {})
 
          expect {api.update_user('test_user', forename: 'Blah', lastname: 'DeBlah')}.to raise_error(Evercam::EvercamError,
-                                                                                                    "Evercam API call returned an error. Message: Unauthorized")
+                                                                                                    "Unauthorized")
       end
    end
 
@@ -97,7 +97,7 @@ describe 'Evercam::API User Methods' do
             to_return(:status => 403, :body => '{"message": "Unauthorized"}', :headers => {})
 
          expect {api.delete_user('test_user')}.to raise_error(Evercam::EvercamError,
-                                                              "Evercam API call returned an error. Message: Unauthorized")
+                                                              "Unauthorized")
       end
    end
 
@@ -125,7 +125,7 @@ describe 'Evercam::API User Methods' do
                                  'test_user@test.com',
                                  'password',
                                  'Ireland')}.to raise_error(Evercam::EvercamError,
-                                                            "Evercam API call returned an error. Message: Unauthorized")
+                                                            "Unauthorized")
       end
 
       it 'raises an exception when the API call response contains no data' do

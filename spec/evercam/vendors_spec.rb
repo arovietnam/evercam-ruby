@@ -20,7 +20,7 @@ describe 'Evercam::API Logs Methods' do
             to_return(:status => 400, :body => '{"message": "Failed"}', :headers => {})
 
          expect {api.get_all_vendors}.to raise_error(Evercam::EvercamError,
-                                                     "Evercam API call returned an error. Message: Failed")
+                                                     "Failed")
       end
 
       it 'raises an exception when the API call response contains no data' do
@@ -49,7 +49,7 @@ describe 'Evercam::API Logs Methods' do
             to_return(:status => 200, :body => '{"message": "Failed"}', :headers => {})
 
          expect {api.get_vendors_by_mac('38:ad:24')}.to raise_error(Evercam::EvercamError,
-                                                                    "Evercam API call returned an error. Message: Failed")
+                                                                    "Failed")
       end
 
       it 'raises an exception when the API call response contains no data' do
