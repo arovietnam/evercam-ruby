@@ -209,7 +209,7 @@ module Evercam
          message = (data["message"] || "Evercam API call returned an error.")
          @logger.error "API response contains error details.\nMessage: #{message}\n"\
                        "Code: #{data["code"]}\nStatus: #{status}"
-         raise EvercamError.new(message, data["code"], status, data["context"])
+         raise EvercamError.new(message, data["code"], status, *data["context"])
       end
    end
 end
