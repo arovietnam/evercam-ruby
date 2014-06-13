@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["howrya@evercam.io"]
   spec.summary       = %q{A wrapper for the Evercam API.}
   spec.description   = %q{This library provides a wrapper for using the Evercam API.}
-  spec.homepage      = "https://evercam.io"
+  spec.homepage      = "https://www.evercam.io"
   spec.license       = "Commercial Proprietary"
 
   spec.files         = Dir.glob("{bin,lib}/**/*") + %w(LICENSE.txt README.md CHANGELOG.md)
