@@ -59,10 +59,10 @@ describe 'Evercam::API User Methods' do
    describe '#update_user' do
       it 'returns a reference to the API object when the API call returns success' do
          stub_request(:patch, "https://api.evercam.io/v1/users/test_user.json").
-            with(:body => "api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e&forename=Blah&lastname=DeBlah").
+            with(:body => "api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e&firstname=Blah&lastname=DeBlah").
             to_return(:status => 200, :body => "", :headers => {})
 
-         output = api.update_user('test_user', forename: 'Blah', lastname: 'DeBlah')
+         output = api.update_user('test_user', firstname: 'Blah', lastname: 'DeBlah')
          expect(output).to eq(api)
       end
 
@@ -73,10 +73,10 @@ describe 'Evercam::API User Methods' do
 
       it 'raises an exception when the API call returns an error' do
          stub_request(:patch, "https://api.evercam.io/v1/users/test_user.json").
-            with(:body => "api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e&forename=Blah&lastname=DeBlah").
+            with(:body => "api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e&firstname=Blah&lastname=DeBlah").
             to_return(:status => 200, :body => '{"message": "Unauthorized"}', :headers => {})
 
-         expect {api.update_user('test_user', forename: 'Blah', lastname: 'DeBlah')}.to raise_error(Evercam::EvercamError,
+         expect {api.update_user('test_user', firstname: 'Blah', lastname: 'DeBlah')}.to raise_error(Evercam::EvercamError,
                                                                                                     "Unauthorized")
       end
    end
@@ -106,7 +106,7 @@ describe 'Evercam::API User Methods' do
    describe '#create_user' do
       it 'returns a Hash when the API call returns success' do
          stub_request(:post, "https://api.evercam.io/v1/users.json").
-            with(:body => "api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e&country=Ireland&email=test_user%40test.com&forename=Test&lastname=User&password=password&username=test_user").
+            with(:body => "api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e&country=Ireland&email=test_user%40test.com&firstname=Test&lastname=User&password=password&username=test_user").
             to_return(:status => 200, :body => '{"users": [{}]}', :headers => {})
 
          data = api.create_user('Test', 'User', 'test_user', 'test_user@test.com', 'password', 'Ireland')
@@ -116,7 +116,7 @@ describe 'Evercam::API User Methods' do
 
       it 'raises an exception when the API call returns an error' do
          stub_request(:post, "https://api.evercam.io/v1/users.json").
-            with(:body => "api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e&country=Ireland&email=test_user%40test.com&forename=Test&lastname=User&password=password&username=test_user").
+            with(:body => "api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e&country=Ireland&email=test_user%40test.com&firstname=Test&lastname=User&password=password&username=test_user").
             to_return(:status => 403, :body => '{"message": "Unauthorized"}', :headers => {})
 
          expect {api.create_user('Test',
@@ -130,7 +130,7 @@ describe 'Evercam::API User Methods' do
 
       it 'raises an exception when the API call response contains no data' do
          stub_request(:post, "https://api.evercam.io/v1/users.json").
-            with(:body => "api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e&country=Ireland&email=test_user%40test.com&forename=Test&lastname=User&password=password&username=test_user").
+            with(:body => "api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e&country=Ireland&email=test_user%40test.com&firstname=Test&lastname=User&password=password&username=test_user").
             to_return(:status => 200, :body => '{"users": []}', :headers => {})
 
          expect {api.create_user('Test',

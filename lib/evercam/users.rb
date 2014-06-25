@@ -40,7 +40,7 @@ module Evercam
       # user::    The Evercam user name or email address of the user to be
       #           updated.
       # values::  A Hash of the values to be updated. Recognized keys in this
-      #           Hash are :forename, :lastname, :username, :country and :email.
+      #           Hash are :firstname, :lastname, :username, :country and :email.
       def update_user(user, values={})
          handle_response(call("/users/#{user}", :patch, values)) if !values.empty?
          self
@@ -68,7 +68,7 @@ module Evercam
       # key::         A share request key to be processed during the process
       #               of creating the new user account. Defaults to nil.
       def create_user(first_name, last_name, user_name, email, password, country, key=nil)
-         parameters = {forename: first_name,
+         parameters = {firstname: first_name,
                        lastname: last_name,
                        username: user_name,
                        country: country,
