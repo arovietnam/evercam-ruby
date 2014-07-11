@@ -7,7 +7,7 @@ describe 'Evercam::API Public Methods' do
 
    describe '#get_public_cameras' do
       it 'returns an array when the API call returns success' do
-         stub_request(:get, "https://api.evercam.io/v1/public/cameras.json?api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e").
+         stub_request(:get, "https://api.evercam.io/v1/public/cameras.json?api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e&thumbnail=false").
             to_return(:status => 200, :body => '{"cameras": [], "pages": 1}', :headers => {})
 
          data = api.get_public_cameras
@@ -20,7 +20,7 @@ describe 'Evercam::API Public Methods' do
       end
 
       it 'raises an exception when the API call returns an error' do
-         stub_request(:get, "https://api.evercam.io/v1/public/cameras.json?api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e").
+         stub_request(:get, "https://api.evercam.io/v1/public/cameras.json?api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e&thumbnail=false").
             to_return(:status => 400, :body => '{"message": "Failed"}', :headers => {})
 
          expect {api.get_public_cameras}.to raise_error(Evercam::EvercamError,
@@ -28,7 +28,7 @@ describe 'Evercam::API Public Methods' do
       end
 
       it 'raises an exception when the API call response contains no data' do
-         stub_request(:get, "https://api.evercam.io/v1/public/cameras.json?api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e").
+         stub_request(:get, "https://api.evercam.io/v1/public/cameras.json?api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e&thumbnail=false").
             to_return(:status => 200, :body => '{}', :headers => {})
 
          expect {api.get_public_cameras}.to raise_error(Evercam::EvercamError,

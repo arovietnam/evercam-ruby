@@ -3,17 +3,18 @@ $: << "#{Dir.getwd}/spec"
 
 ENV['EVERCAM_ENV'] ||= 'test'
 
-require 'bundler'
-require 'cgi'
-require 'minitest/autorun'
 require 'simplecov'
-
-Bundler.require(:default, :test)
 
 # code coverage
 SimpleCov.start do
   add_filter '/spec/'
 end
+
+require 'bundler'
+require 'cgi'
+require 'minitest/autorun'
+
+Bundler.require(:default, :test)
 
 RSpec.configure do |c|
   c.expect_with :stdlib, :rspec

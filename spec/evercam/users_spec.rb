@@ -36,7 +36,7 @@ describe 'Evercam::API User Methods' do
 
    describe '#get_user_cameras' do
       it 'returns an array when the API call returns success' do
-         stub_request(:get, "https://api.evercam.io/v1/users/test_user/cameras.json?api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e&include_shared=true").
+         stub_request(:get, "https://api.evercam.io/v1/users/test_user/cameras.json?api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e&include_shared=true&thumbnail=false").
             to_return(:status => 200, :body => '{"cameras": [{}, {}]}', :headers => {})
 
          output = api.get_user_cameras('test_user', true)
@@ -46,7 +46,7 @@ describe 'Evercam::API User Methods' do
       end
 
       it 'raises an exception when the API call returns an error' do
-         stub_request(:get, "https://api.evercam.io/v1/users/test_user/cameras.json?api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e&include_shared=false").
+         stub_request(:get, "https://api.evercam.io/v1/users/test_user/cameras.json?api_id=123456&api_key=1a2b3c4d5e6a7b8c9d0e&include_shared=false&thumbnail=false").
             to_return(:status => 403, :body => '{"message": "Unauthorized"}', :headers => {})
 
          expect {api.get_user_cameras('test_user')}.to raise_error(Evercam::EvercamError,
