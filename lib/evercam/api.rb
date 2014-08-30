@@ -11,6 +11,7 @@ module Evercam
       include Snapshots
       include Users
       include Vendors
+      include Webhooks
 
       # Constructor for the API class.
       #

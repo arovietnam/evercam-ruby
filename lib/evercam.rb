@@ -19,6 +19,7 @@ require "evercam/shares"
 require "evercam/snapshots"
 require "evercam/users"
 require "evercam/vendors"
+require "evercam/webhooks"
 require "evercam/api"
 
 module Evercam
