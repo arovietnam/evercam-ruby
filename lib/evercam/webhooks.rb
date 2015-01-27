@@ -11,7 +11,7 @@ module Evercam
     def get_webhooks(camera_id, id = nil)
       parameters = {camera_id: camera_id}
       parameters[:id] = id if id
-      data = handle_response(call("/webhooks", :get, parameters)) unless camera_id.nil?
+      data = handle_response(call("/cameras/#{camera_id}/webhooks", :get, parameters)) unless camera_id.nil?
       if !data.include?("webhooks")
         message = "Invalid response received from server."
         @logger.error message
@@ -26,7 +26,7 @@ module Evercam
     # webhook_id::  The unique identifier of the camera to be updated.
     # url::         The url which will receive webhook data.
     def update_webhook(webhook_id, url)
-      handle_response(call("/webhooks/#{webhook_id}", :patch, url)) unless url.nil?
+      handle_response(call("/cameras/#{camera_id}/webhooks/#{webhook_id}", :patch, url)) unless url.nil?
       self
     end
 
@@ -35,10 +35,10 @@ module Evercam
     # ==== Parameters
     # webhook_id::  The unique identifier of the webhook.
     def delete_webhook(webhook_id)
-      # handle_response(call("/webhooks/#{webhook_id}", :delete))
+      # handle_response(call("/cameras/#{camera_id}/webhooks/#{webhook_id}", :delete))
       # self
 
-      data = handle_response(call("/webhooks/#{webhook_id}", :delete))
+      data = handle_response(call("/cameras/#{camera_id}/webhooks/#{webhook_id}", :delete))
       if !data.include?("webhooks") || data["webhooks"].size == 0
         message = "Invalid response received from server."
         @logger.error message
@@ -58,7 +58,7 @@ module Evercam
                     url: url,
                     user_id: user_id}
 
-      data = handle_response(call("/webhooks", :post, parameters))
+      data = handle_response(call("/cameras/#{camera_id}/webhooks", :post, parameters))
       if !data.include?("webhooks") || data["webhooks"].size == 0
         message = "Invalid response received from server."
         @logger.error message

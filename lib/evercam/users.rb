@@ -27,7 +27,7 @@ module Evercam
     # thumbnail::  A boolean to indicate if thumbnails should be included in
     #          the fetch. Defaults to false.
     def get_user_cameras(user, shared=false, thumbnail=false)
-      data = handle_response(call("/users/#{user}/cameras", :get, include_shared: shared, thumbnail: thumbnail))
+      data = handle_response(call("/cameras", :get, include_shared: shared, thumbnail: thumbnail, user_id: user))
       if !data.include?("cameras")
         message = "Invalid response received from server."
         @logger.error message

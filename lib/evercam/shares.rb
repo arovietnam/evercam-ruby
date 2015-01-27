@@ -9,7 +9,7 @@ module Evercam
       # user_id::    Either the user name or email address of the user that the
       #              camera was shared with.
       def get_camera_share(camera_id, user_id)
-         data = handle_response(call("/shares", :get, camera_id: camera_id, user_id: user_id))
+         data = handle_response(call("/cameras/#{camera_id}/shares", :get, user_id: user_id))
          if !data.include?("shares")
             message = "Invalid response received from server."
             @logger.error message
@@ -24,7 +24,7 @@ module Evercam
       # camera_id::  The unique identifier of the camera to produce the list of
       #              shares for.
       def get_camera_shares(camera_id)
-         data = handle_response(call("/shares/cameras/#{camera_id}"))
+         data = handle_response(call("/cameras/#{camera_id}/shares"))
          if !data.include?("shares")
             message = "Invalid response received from server."
             @logger.error message
@@ -56,7 +56,7 @@ module Evercam
          parameters[:grantor] = options[:grantor] if options.include?(:grantor)
          parameters[:message] = options[:message] if options.include?(:message)
          parameters[:notify] = (options[:notify] == true) if options.include?(:notify)
-         data = handle_response(call("/shares/cameras/#{camera_id}", :post, parameters))
+         data = handle_response(call("/cameras/#{camera_id}/shares", :post, parameters))
 
          output = nil
          if data.include?("shares")
@@ -85,7 +85,7 @@ module Evercam
       # camera_id::  The unique identifier for the camera that was shared.
       # share_id::   The unique identifier of the share that is being deleted.
       def delete_camera_share(camera_id, share_id)
-         handle_response(call("/shares/cameras/#{camera_id}", :delete, share_id: share_id))
+         handle_response(call("/cameras/#{camera_id}/shares", :delete, share_id: share_id))
          self
       end
 
@@ -98,7 +98,7 @@ module Evercam
       #             consisting of a comma separated array of right names.
       def update_camera_share(share_id, rights)
          parameters = {rights: (rights.kind_of?(String) ? rights : rights.join(","))}
-         handle_response(call("/shares/cameras/#{share_id}", :patch, parameters))
+         handle_response(call("/cameras/#{share_id}/shares", :patch, parameters))
          self
       end
 
@@ -109,7 +109,7 @@ module Evercam
       # user_id::  The unique identifier of the user to fetch the list of shares
       #            for.
       def get_user_camera_shares(user_id)
-         data = handle_response(call("/shares/users/#{user_id}"))
+         data = handle_response(call("/users/#{user_id}/shares"))
          if !data.include?("shares")
             message = "Invalid response received from server."
             @logger.error message
@@ -131,7 +131,7 @@ module Evercam
       def get_camera_share_requests(camera_id, status=nil)
          parameters = {}
          parameters[:status] = status if !status.nil?
-         data = handle_response(call("/shares/requests/#{camera_id}", :get, parameters))
+         data = handle_response(call("/cameras/#{camera_id}/shares/requests", :get, parameters))
          if !data.include?("share_requests")
             message = "Invalid response received from server."
             @logger.error message
@@ -148,7 +148,7 @@ module Evercam
       # email::       The email address associated with the share request
       #               being cancelled.
       def cancel_camera_share_request(request_id, email)
-         handle_response(call("/shares/requests/#{request_id}", :delete, email: email))
+         handle_response(call("/cameras/#{camera_id}/shares/requests", :delete, email: email))
          self
       end
 
@@ -162,7 +162,7 @@ module Evercam
       #               containing a comma separated list of right names.
       def update_camera_share_request(request_id, rights)
          parameters = {rights: (rights.kind_of?(String) ? rights : rights.join(","))}
-         handle_response(call("/shares/requests/#{request_id}", :patch, parameters))
+         handle_response(call("/cameras/#{camera_id}/shares/requests", :patch, parameters))
          self
       end
    end
