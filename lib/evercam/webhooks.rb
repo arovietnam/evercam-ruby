@@ -34,10 +34,7 @@ module Evercam
     #
     # ==== Parameters
     # webhook_id::  The unique identifier of the webhook.
-    def delete_webhook(webhook_id)
-      # handle_response(call("/cameras/#{camera_id}/webhooks/#{webhook_id}", :delete))
-      # self
-
+    def delete_webhook(camera_id, webhook_id)
       data = handle_response(call("/cameras/#{camera_id}/webhooks/#{webhook_id}", :delete))
       if !data.include?("webhooks") || data["webhooks"].size == 0
         message = "Invalid response received from server."
@@ -55,8 +52,8 @@ module Evercam
     # user_id::     The Evercam user name of the webhook owner.
     def create_webhook(camera_id, url, user_id)
       parameters = {camera_id: camera_id,
-                    url: url,
-                    user_id: user_id}
+        url: url,
+        user_id: user_id}
 
       data = handle_response(call("/cameras/#{camera_id}/webhooks", :post, parameters))
       if !data.include?("webhooks") || data["webhooks"].size == 0

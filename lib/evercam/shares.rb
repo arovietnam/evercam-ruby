@@ -83,9 +83,9 @@ module Evercam
       #
       # ==== Parameters
       # camera_id::  The unique identifier for the camera that was shared.
-      # share_id::   The unique identifier of the share that is being deleted.
-      def delete_camera_share(camera_id, share_id)
-         handle_response(call("/cameras/#{camera_id}/shares", :delete, share_id: share_id))
+      # email::      Email of the user with whom the camera was shared.
+      def delete_camera_share(camera_id, email)
+         handle_response(call("/cameras/#{camera_id}/shares", :delete, email: email))
          self
       end
 
@@ -93,12 +93,13 @@ module Evercam
       # available to the user that the camera was shared with.
       #
       # ==== Parameters
-      # share_id::  The unique identifier of the camera share to be updated.
+      # camera_id::  The unique identifier for the camera that was shared.
+      # email::      Email of the user with whom the camera was shared.
       # rights::    Either an array of right name strings or a single string
       #             consisting of a comma separated array of right names.
-      def update_camera_share(share_id, rights)
-         parameters = {rights: (rights.kind_of?(String) ? rights : rights.join(","))}
-         handle_response(call("/cameras/#{share_id}/shares", :patch, parameters))
+      def update_camera_share(camera_id, email, rights)
+         parameters = {email: email, rights: (rights.kind_of?(String) ? rights : rights.join(","))}
+         handle_response(call("/cameras/#{camera_id}/shares", :patch, parameters))
          self
       end
 
@@ -147,7 +148,7 @@ module Evercam
       #               cancelled.
       # email::       The email address associated with the share request
       #               being cancelled.
-      def cancel_camera_share_request(request_id, email)
+      def cancel_camera_share_request(camera_id, email)
          handle_response(call("/cameras/#{camera_id}/shares/requests", :delete, email: email))
          self
       end
@@ -160,8 +161,8 @@ module Evercam
       #               updated.
       # rights::      Either an array of right name strings or a string
       #               containing a comma separated list of right names.
-      def update_camera_share_request(request_id, rights)
-         parameters = {rights: (rights.kind_of?(String) ? rights : rights.join(","))}
+      def update_camera_share_request(camera_id, email, rights)
+         parameters = {email: email, rights: (rights.kind_of?(String) ? rights : rights.join(","))}
          handle_response(call("/cameras/#{camera_id}/shares/requests", :patch, parameters))
          self
       end
