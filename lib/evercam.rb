@@ -21,6 +21,7 @@ require "evercam/users"
 require "evercam/vendors"
 require "evercam/webhooks"
 require "evercam/api"
+require "evercam/archives"
 
 module Evercam
 end

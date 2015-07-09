@@ -1,7 +1,7 @@
 # Copyright © 2014, Evercam.
 
 module Evercam
-  module Cameras
+  module Archives
     # This method attempts to retrieve the archives for a specific camera.
     #
     # ==== Parameters
