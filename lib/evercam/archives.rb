@@ -21,7 +21,7 @@ module Evercam
     # ==== Parameters
     # camera_id::  The unique identifier for the camera to query.
     # archive_id::  The unique identifier for the archive to query.
-    def get_camera(camera_id, archive_id)
+    def get_archive(camera_id, archive_id)
       data = handle_response(call("/cameras/#{camera_id}/archives/#{archive_id}", :get))
       if !data.include?("archives") || data["archives"].size == 0
         message = "Invalid response received from server."
@@ -36,7 +36,7 @@ module Evercam
     # ==== Parameters
     # camera_id::  The unique identifier of the camera to be deleted.
     # archive_id::  The unique identifier for the archive to delete.
-    def delete_camera(camera_id, archive_id)
+    def delete_archive(camera_id, archive_id)
       handle_response(call("/cameras/#{camera_id}/archives/#{archive_id}", :delete))
       self
     end
