@@ -56,7 +56,7 @@ module Evercam
                     to_date: to_date, requested_by: requested_by}
       parameters[:embed_time] = embed_time if !embed_time.nil?
       parameters[:public] = public if !public.nil?
-      data = handle_response(call("/cameras#{camera_id}/archives", :post, parameters))
+      data = handle_response(call("/cameras/#{camera_id}/archives", :post, parameters))
       if !data.include?("archives") || data["archives"].size == 0
         message = "Invalid response received from server."
         @logger.error message
@@ -76,7 +76,7 @@ module Evercam
     # embed_time::   Add DateTime overlay on archive.
     # public::       To make archive available publically or not.
     def update_archive(camera_id, archive_id, values={})
-      handle_response(call("/cameras#{camera_id}/archives/#{archive_id}", :patch, values)) if !values.empty?
+      handle_response(call("/cameras/#{camera_id}/archives/#{archive_id}", :patch, values)) if !values.empty?
       self
     end
   end
