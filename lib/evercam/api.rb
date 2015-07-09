@@ -12,6 +12,7 @@ module Evercam
       include Users
       include Vendors
       include Webhooks
+      include Archives
 
       # Constructor for the API class.
       #
