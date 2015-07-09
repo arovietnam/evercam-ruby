@@ -11,6 +11,7 @@ require "typhoeus/adapters/faraday"
 require "evercam/version"
 require "evercam/exceptions"
 require "evercam/null_logger"
+require "evercam/archives"
 require "evercam/cameras"
 require "evercam/logs"
 require "evercam/models"
@@ -21,7 +22,6 @@ require "evercam/users"
 require "evercam/vendors"
 require "evercam/webhooks"
 require "evercam/api"
-require "evercam/archives"
 
 module Evercam
 end
