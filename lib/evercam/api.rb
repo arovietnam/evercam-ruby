@@ -3,6 +3,7 @@
 module Evercam
   class API
     # Include the module components.
+    include Apps
     include Cameras
     include Logs
     include Models
