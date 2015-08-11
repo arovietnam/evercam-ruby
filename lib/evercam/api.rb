@@ -5,6 +5,7 @@ module Evercam
     # Include the module components.
     include Apps
     include Cameras
+    include CloudRecording
     include Logs
     include Models
     include Public
