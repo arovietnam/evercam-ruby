@@ -27,7 +27,7 @@ module Evercam
     # thumbnail::  A boolean to indicate if thumbnails should be included in
     #          the fetch. Defaults to false.
     def get_user_cameras(user, shared=false, thumbnail=false)
-      data = handle_response(call("/users/#{user}/cameras", :get, include_shared: shared, thumbnail: thumbnail))
+      data = handle_response(call("/cameras", :get, include_shared: shared, thumbnail: thumbnail, user_id: user))
       if !data.include?("cameras")
         message = "Invalid response received from server."
         @logger.error message
@@ -69,13 +69,13 @@ module Evercam
     # country::     The country for the new user.
     # key::         A share request key to be processed during the process
     #               of creating the new user account. Defaults to nil.
-    def create_user(first_name, last_name, user_name, email, password, country, key=nil)
+    def create_user(first_name, last_name, user_name, email, password, country=nil, key=nil)
       parameters = {firstname: first_name,
                     lastname: last_name,
                     username: user_name,
-                    country: country,
                     email: email,
                     password: password}
+      parameters[:country] = country if !country.nil?
       parameters[:share_request_key] = key if !key.nil?
       data = handle_response(call("/users", :post, parameters))
       if !data.include?('users') || data['users'].empty?

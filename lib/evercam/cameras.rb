@@ -84,10 +84,10 @@ module Evercam
     #              :external_http_port, :internal_http_port,
     #              :external_rtsp_port, :internal_rtsp_port, :jpg_url,
     #              :cam_username and :cam_password.
-    def create_camera(camera_id, name, is_public, values={})
-      parameters = {id: camera_id,
-                    name: name,
+    def create_camera(name, is_public, values={}, camera_id=nil)
+      parameters = {name: name,
                     is_public: is_public}.merge(values)
+      parameters[:id] = camera_id if !camera_id.nil?
       data = handle_response(call("/cameras", :post, parameters))
       if !data.include?("cameras") || data["cameras"].size == 0
         message = "Invalid response received from server."

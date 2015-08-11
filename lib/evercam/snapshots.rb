@@ -24,7 +24,7 @@ module Evercam
       # camera_id::  The unique identifier for the camera to list snapshots
       #              for.
       def get_snapshots(camera_id)
-         data = handle_response(call("/cameras/#{camera_id}/snapshots"))
+         data = handle_response(call("/cameras/#{camera_id}/recordings/snapshots"))
          if !data.include?("snapshots")
             message = "Invalid response received from server."
             @logger.error message
@@ -47,7 +47,7 @@ module Evercam
       def store_snapshot(camera_id, comment=nil)
          parameters = {}
          parameters[:notes] = comment.to_s if !comment.nil?
-         data = handle_response(call("/cameras/#{camera_id}/snapshots", :post, parameters))
+         data = handle_response(call("/cameras/#{camera_id}/recordings/snapshots", :post, parameters))
          if !data.include?("snapshots") || data["snapshots"].size == 0
             message = "Invalid response received from server."
             @logger.error message
@@ -67,7 +67,7 @@ module Evercam
       def get_latest_snapshot(camera_id, complete=false)
          parameters = {}
          parameters[:with_data] = true if complete == true
-         data = handle_response(call("/cameras/#{camera_id}/snapshots/latest", :get, parameters))
+         data = handle_response(call("/cameras/#{camera_id}/recordings/snapshots/latest", :get, parameters))
          if !data.include?("snapshots")
             message = "Invalid response received from server."
             @logger.error message
@@ -101,7 +101,7 @@ module Evercam
             parameters[:limit] = (options[:with_data] ? 10 : 100)
          end
          parameters[:page] = options[:page] if options.include?(:page)
-         data = handle_response(call("/cameras/#{camera_id}/snapshots/range", :get, parameters))
+         data = handle_response(call("/cameras/#{camera_id}/recordings/snapshots", :get, parameters))
          if !data.include?("snapshots")
             message = "Invalid response received from server."
             @logger.error message
@@ -127,7 +127,7 @@ module Evercam
       def get_snapshot_dates(camera_id, month=nil, year=nil)
          month = (month || Time.now.month)
          year  = (year || Time.now.year)
-         data  = handle_response(call("/cameras/#{camera_id}/snapshots/#{year}/#{month}/days"))
+         data  = handle_response(call("/cameras/#{camera_id}/recordings/snapshots/#{year}/#{month}/days"))
          if !data.include?("days")
             message = "Invalid response received from server."
             @logger.error message
@@ -148,7 +148,7 @@ module Evercam
       #              value is not taken into consideration. Defaults to the
       #              current date.
       def get_snapshots_by_hour(camera_id, date=Time.now)
-         data = handle_response(call("/cameras/#{camera_id}/snapshots/#{date.year}/#{date.month}/#{date.day}/hours"))
+         data = handle_response(call("/cameras/#{camera_id}/recordings/snapshots/#{date.year}/#{date.month}/#{date.day}/hours"))
          if !data.include?("hours")
             message = "Invalid response received from server."
             @logger.error message
@@ -168,7 +168,7 @@ module Evercam
       def get_snapshot_at(camera_id, timestamp, options={})
          parameters = {with_data: (options[:with_data] == true)}
          parameters[:range] = options[:range] if options.include?(:range)
-         data = handle_response(call("/cameras/#{camera_id}/snapshots/#{timestamp.to_i}",
+         data = handle_response(call("/cameras/#{camera_id}/recordings/snapshots/#{timestamp.to_i}",
                                      :get, parameters))
          if !data.include?("snapshots") || data["snapshots"].size == 0
             message = "Invalid response received from server."
@@ -186,7 +186,7 @@ module Evercam
       #              is stored under.
       # timestamp::  The timestamp of the snapshot to be deleted.
       def delete_snapshot(camera_id, timestamp)
-         data = handle_response(call("/cameras/#{camera_id}/snapshots/#{timestamp.to_i}", :delete))
+         data = handle_response(call("/cameras/#{camera_id}/recordings/snapshots/#{timestamp.to_i}", :delete))
          self
       end
 
@@ -198,7 +198,7 @@ module Evercam
       # camera_id::  The unique identifier for the camera to get the snapshot
       #              from.
       def get_snapshot(camera_id)
-         handle_raw(call("/cameras/#{camera_id}/snapshot.jpg"))
+         handle_raw(call("/cameras/#{camera_id}/live/snapshot.jpg"))
       end
    end
 end
