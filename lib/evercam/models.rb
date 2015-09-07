@@ -31,16 +31,15 @@ module Evercam
       # This method fetches details for a specific model for a given vendor.
       #
       # ==== Parameters
-      # vendor::  The unique identifier for the vendor who owns the model.
-      # model::   The unique identifier for the model to fetch.
-      def get_vendor_model(vendor, model)
-         data = handle_response(call("/models/#{vendor}/#{model}"))
-         if !data.include?("models") || data["models"].empty?
+      # model_id::   The unique identifier for the model to fetch.
+      def get_model(model_id)
+         data = handle_response(call("/models/#{model}"))
+         if !data.include?("models") || data["models"].size == 0
             message = "Invalid response received from server."
             @logger.error message
             raise EvercamError.new(message)
          end
-         data["models"].first
+         data["models"][0]
       end
    end
 end
