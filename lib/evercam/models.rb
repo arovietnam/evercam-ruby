@@ -33,7 +33,7 @@ module Evercam
       # ==== Parameters
       # model_id::   The unique identifier for the model to fetch.
       def get_model(model_id)
-         data = handle_response(call("/models/#{model}"))
+         data = handle_response(call("/models/#{model_id}"))
          if !data.include?("models") || data["models"].size == 0
             message = "Invalid response received from server."
             @logger.error message
