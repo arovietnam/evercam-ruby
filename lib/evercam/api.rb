@@ -6,6 +6,7 @@ module Evercam
     include Apps
     include Cameras
     include CloudRecording
+    include MotionDetection
     include Logs
     include Models
     include Public
