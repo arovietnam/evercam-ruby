@@ -1,7 +1,7 @@
 # Copyright © 2014, Evercam.
 
 module Evercam
-  module CloudRecording
+  module MotionDetection
     def get_motion_detections(camera_id)
       data = handle_response(call("/cameras/#{camera_id}/apps/motion-detection", :get))
       if !data.include?("motion_detections")
