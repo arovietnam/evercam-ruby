@@ -40,3 +40,7 @@ To add a logger to the Evercam API object you can do this during the creation
 of the object as follows...
 
     api = Evercam::API.new(api_id: '1234567', api_key: '1a2b3c4d5e6a7b8c9d0e', logger: Logger.new(STDOUT))
+
+### Documentation
+
+**All** of the documentation regarding Evercam can be found here: https://github.com/evercam/evercam-api/wiki
