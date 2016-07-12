@@ -193,7 +193,7 @@ module Evercam
     # ==== Parameters
     # suffix::  The API call dependent part of the path.
     def api_path(suffix)
-       ((/.+\..+$/ =~ suffix) != 0) ? "/v1#{suffix}.json" : "/v1#{suffix}"
+       ((/.+\..+$/ =~ suffix) != 0) ? "/v1#{suffix}" : "/v1#{suffix}"
     end
 
     # This method generates the fully qualified URL for an API endpoint.
