@@ -26,7 +26,7 @@ module Evercam
        @api_id  = options[:api_id]
        @api_key = options[:api_key]
        @logger  = NullLogger.new(STDOUT)
-       @host    = "api.evercam.io"
+       @host    = "media.evercam.io"
        @port    = nil
        @scheme  = "https"
        @version = "1"
