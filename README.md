@@ -43,4 +43,4 @@ of the object as follows...
 
 ### Documentation
 
-**All** of the documentation regarding Evercam can be found here: https://github.com/evercam/evercam-api/wiki
+**All** of the documentation regarding Evercam can be found here: https://github.com/evercam/evercam-media/wiki
