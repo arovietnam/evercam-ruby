@@ -69,12 +69,13 @@ module Evercam
     # country::     The country for the new user.
     # key::         A share request key to be processed during the process
     #               of creating the new user account. Defaults to nil.
-    def create_user(first_name, last_name, user_name, email, password, country=nil, key=nil)
+    def create_user(first_name, last_name, user_name, email, password, token, country=nil, key=nil)
       parameters = {firstname: first_name,
                     lastname: last_name,
                     username: user_name,
                     email: email,
-                    password: password}
+                    password: password,
+                    token: token}
       parameters[:country] = country if !country.nil?
       parameters[:share_request_key] = key if !key.nil?
       data = handle_response(call("/users", :post, parameters))
