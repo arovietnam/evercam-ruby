@@ -23,6 +23,7 @@ require "evercam/shares"
 require "evercam/snapshots"
 require "evercam/users"
 require "evercam/vendors"
+require "evercam/snapmails"
 require "evercam/webhooks"
 require "evercam/api"
 

@@ -16,6 +16,7 @@ module Evercam
     include Vendors
     include Webhooks
     include Archives
+    include Snapmails
 
     # Constructor for the API class.
     #
