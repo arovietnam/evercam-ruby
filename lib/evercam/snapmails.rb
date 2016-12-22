@@ -6,7 +6,7 @@ module Evercam
     #
     # ==== Parameters
     # camera_id::  The unique identifier for the camera to query.
-    def get_archives()
+    def get_snapmails()
       data = handle_response(call("/snapmails", :get))
       if !data.include?("snapmails")
         message = "Invalid response received from server."
