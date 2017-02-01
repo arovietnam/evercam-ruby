@@ -65,7 +65,7 @@ module Evercam
     #
     # ==== Parameters
     # id::  The unique identifier of the snapmail to be deleted.
-    def delete_archive(id)
+    def delete_snapmail(id)
       handle_response(call("/snapmails/#{id}", :delete))
       self
     end
